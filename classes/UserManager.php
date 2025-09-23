@@ -1,5 +1,4 @@
 <?php
-// classes/UserManager.php
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/User.php';
 
@@ -23,7 +22,7 @@ class UserManager {
                 ':password' => $hashed
             ]);
         } catch (PDOException $e) {
-            return false; // e.g. duplicate username
+            return false;
         }
     }
 
@@ -34,7 +33,8 @@ class UserManager {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row && password_verify($password, $row['password'])) {
-            return new User($row['username'], $row['password']);
+            // Use $isHashed = true so constructor doesn’t rehash
+            return new User($row['username'], $row['password'], true);
         }
         return null;
     }

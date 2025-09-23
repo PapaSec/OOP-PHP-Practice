@@ -19,8 +19,12 @@ class AuthController {
 
     public function handleRegister(string $username, string $password): void {
         if ($this->manager->register($username, $password)) {
-            echo "<p style='color:green'>Registration successful! You can now login.</p>";
-            $this->showLogin();
+            // Auto-login after successful registration
+            $user = $this->manager->login($username, $password);
+            $_SESSION['user'] = $user;
+
+            header("Location: index.php?page=dashboard");
+            exit;
         } else {
             echo "<p style='color:red'>Username already exists!</p>";
             $this->showSignup();
@@ -30,11 +34,12 @@ class AuthController {
     public function handleLogin(string $username, string $password): void {
         $user = $this->manager->login($username, $password);
         if ($user) {
-            include __DIR__ . '/../views/dashboard.php';
+            $_SESSION['user'] = $user;
+            header("Location: index.php?page=dashboard");
+            exit;
         } else {
             $error = "Invalid login!";
             include __DIR__ . '/../views/login_form.php';
         }
     }
-    
 }

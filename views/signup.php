@@ -1,11 +1,12 @@
 <div class="login-box">
     <h1>Register</h1>
     <form action="index.php" method="post">
-        <input type="hidden" name="register" value="1">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Register</button>
-    </form>
+    <input type="hidden" name="action" value="register">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Register</button>
+</form>
+
 
 
     <p>Already have an account? <a href="index.php">Login</a></p>

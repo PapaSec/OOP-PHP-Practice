@@ -2,7 +2,7 @@
     <h1>Login</h1>
     <form action="index.php" method="post">
         <input type="text" name="username" placeholder="Username" required>
-        <input type="text" name="password" placeholder="Password" required>
+        <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
     </form>
 

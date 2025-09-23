@@ -36,4 +36,5 @@ class AuthController {
             include __DIR__ . '/../views/login_form.php';
         }
     }
+    
 }

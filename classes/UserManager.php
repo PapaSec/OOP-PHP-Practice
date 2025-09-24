@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/User.php';
+require_once __DIR__ . '/AdminUser.php';
 
 class UserManager {
     private PDO $conn;
@@ -11,7 +12,7 @@ class UserManager {
     }
 
     public function register(string $username, string $password): bool {
-        $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+        $sql = "INSERT INTO users (username, password, role) VALUES (:username, :password, 'user')";
         $stmt = $this->conn->prepare($sql);
 
         $hashed = password_hash($password, PASSWORD_DEFAULT);
@@ -33,8 +34,13 @@ class UserManager {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row && password_verify($password, $row['password'])) {
-            // Use $isHashed = true so constructor doesn’t rehash
-            return new User($row['username'], $row['password'], true);
+            if ($row['role'] === 'admin') {
+                // return an AdminUser object
+                return new AdminUser($row['username'], $row['password'], ["manage_users", "view_reports"], true);
+            } else {
+                // return a normal User
+                return new User($row['username'], $row['password'], true);
+            }
         }
         return null;
     }

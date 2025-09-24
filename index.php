@@ -1,5 +1,5 @@
 <?php
-// ✅ Load classes before session_start
+// Load classes before session_start
 require_once __DIR__ . '/classes/User.php';
 require_once __DIR__ . '/classes/AdminUser.php';
 require_once __DIR__ . '/controllers/AuthController.php';
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $auth->showSignup();
     } elseif (isset($_GET['page']) && $_GET['page'] === 'dashboard') {
         if (isset($_SESSION['user'])) {
-            $user = $_SESSION['user'];   // ✅ Now class exists before unserialize
+            $user = $_SESSION['user'];   // Now class exists before unserialize
             include __DIR__ . '/views/dashboard.php';
         } else {
             header("Location: index.php");
